@@ -15,11 +15,11 @@ public class Main {
 
             myStamt = myConn.createStatement();
 
-            int rowsAffected = myStamt.executeUpdate("UPDATE employees " + "set first_name='Luis' " + "WHERE first_name='Emily'");
+            int rowsAffected = myStamt.executeUpdate("DELETE FROM employees " + "WHERE first_name='Luis'");
 
             myRes = myStamt.executeQuery("SELECT * FROM employees ORDER BY first_name");
 
-            System.out.println("Se ha actualizado la bbdd");
+            System.out.println("Empleados despues de eliminar");
             while (myRes.next()){
                 System.out.println(myRes.getString("first_name"));
             }
