@@ -5,21 +5,23 @@ import java.sql.*;
 public class Main {
     public static void main(String[] args)  throws SQLException {
           Connection myConn = null;
-          PreparedStatement myStamt = null;
+          Statement myStamt = null;
+          ResultSet myRes = null;
 
         try{
             myConn= DriverManager.getConnection("jdbc:mysql://127.0.0.1:3306/project", "root", "");
             System.out.println("Genial, nos conectamos");
 
-            String sql = ("INSERT INTO employees (first_name) VALUES (?)");
 
-            myStamt = myConn.prepareStatement(sql);
-            myStamt.setString(1, "Cristina");
+            myStamt = myConn.createStatement();
 
-            int rowsAffected = myStamt.executeUpdate();
+            int rowsAffected = myStamt.executeUpdate("UPDATE employees " + "set first_name='Luis' " + "WHERE first_name='Emily'");
 
-            if (rowsAffected>0){
-                System.out.println("Se ha creado un nuevo cliente");
+            myRes = myStamt.executeQuery("SELECT * FROM employees ORDER BY first_name");
+
+            System.out.println("Se ha actualizado la bbdd");
+            while (myRes.next()){
+                System.out.println(myRes.getString("first_name"));
             }
         } catch(Exception e) {
             e.printStackTrace();
